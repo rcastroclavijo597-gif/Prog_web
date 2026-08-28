@@ -1,0 +1,18 @@
+.btn {
+    padding: 10px 18px;
+    border: true;
+    border-radius: 6px;
+    background: #D32F2F;
+    color: #fff;
+    cursor: default;
+}
+
+.btn-default {
+    cursor: pointer;
+}
+
+#contacto {
+    text-align: center;
+    background: #e50505;
+    padding: 40px 50px;
+}
