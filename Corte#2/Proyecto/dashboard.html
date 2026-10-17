@@ -11,11 +11,35 @@
     <style>
         .tarjeta-stat { cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
         .tarjeta-stat:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.05); }
+        
+        /* ESTILOS DEL SUBMENÚ AÑADIDOS AL DASHBOARD */
+        .sub-nav { 
+            background-color: var(--color-navbar); 
+            padding: 0 40px; 
+            display: flex; 
+            gap: 30px; 
+            border-top: 1px solid #333; 
+        }
+        .sub-nav a { 
+            color: #AAAAAA; 
+            text-decoration: none; 
+            padding: 15px 0; 
+            font-size: 0.9rem; 
+            font-weight: 500; 
+            transition: color 0.2s;
+        }
+        .sub-nav a:hover {
+            color: #E0E0E0;
+        }
+        .sub-nav a.activo { 
+            color: #FFFFFF; 
+            border-bottom: 2px solid var(--color-cyan); 
+        }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
+    <nav class="navbar" style="padding-bottom: 15px;">
         <div class="nav-izq">
             <div class="logo">
                 <span class="icono-logo">*</span> vibra
@@ -30,6 +54,8 @@
             <div class="avatar-usuario">A</div>
         </div>
     </nav>
+    
+    <!-- SUBMENÚ APLICADO CORRECTAMENTE AQUÍ -->
     <div class="sub-nav">
         <a href="dashboard.html" class="activo">Resumen</a>
         <a href="#">Solicitudes</a>
