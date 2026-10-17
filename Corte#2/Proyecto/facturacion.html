@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibra - Facturación</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .sub-nav { background-color: var(--color-navbar); padding: 0 40px; display: flex; gap: 30px; border-top: 1px solid #333; }
+        .sub-nav a { color: #AAAAAA; text-decoration: none; padding: 15px 0; font-size: 0.9rem; font-weight: 500; }
+        .sub-nav a.activo { color: #FFFFFF; border-bottom: 2px solid var(--color-cyan); }
+        
+        .toggle-botones { display: inline-flex; background: white; border-radius: 30px; padding: 5px; margin-bottom: 30px; }
+        .btn-toggle { padding: 10px 20px; border-radius: 20px; border: none; background: transparent; font-size: 0.9rem; font-weight: 700; cursor: pointer; color: var(--color-texto-gris); transition: 0.3s; }
+        .btn-toggle.activo { background: var(--color-texto-oscuro); color: white; }
+
+        .banner-total { border-radius: 15px; padding: 30px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; transition: background 0.3s; }
+        .banner-naranja { background-color: #FFF3E0; }
+        .banner-cyan { background-color: #E6FFFA; }
+        
+        .banner-titulo { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 1px; }
+        .banner-naranja .banner-titulo { color: #D97706; }
+        .banner-cyan .banner-titulo { color: #0D9488; }
+        
+        .banner-monto { font-size: 2.5rem; font-weight: 700; }
+        .banner-naranja .banner-monto { color: #D97706; }
+        .banner-cyan .banner-monto { color: #0D9488; }
+        
+        .banner-cuenta { font-size: 0.85rem; font-weight: 700; }
+        .banner-naranja .banner-cuenta { color: #D97706; }
+        .banner-cyan .banner-cuenta { color: #0D9488; }
+
+        .tabla-facturacion { width: 100%; border-collapse: collapse; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .tabla-facturacion th { text-align: left; padding: 15px 20px; font-size: 0.7rem; color: #AAA; text-transform: uppercase; border-bottom: 1px solid var(--color-borde); }
+        .tabla-facturacion td { padding: 20px; border-bottom: 1px solid var(--color-borde); vertical-align: middle; }
+        .tabla-facturacion tr:last-child td { border-bottom: none; }
+        
+        .badge-pendiente-pago { background: #FFF3E0; color: #D97706; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+        .badge-pagado { background: #E6FFFA; color: #0D9488; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" style="padding-bottom: 15px;">
+        <div class="nav-izq">
+            <div class="logo"><span class="icono-logo">*</span> vibra</div>
+            <span class="badge-admin">Administración</span>
+        </div>
+        <div class="nav-der">
+            <a href="index.html" style="color: #AAA; text-decoration: none; font-size: 0.85rem; margin-right: 15px;">Cerrar sesión</a>
+            <div class="avatar-usuario">A</div>
+        </div>
+    </nav>
+    <div class="sub-nav">
+        <a href="dashboard.html">Resumen</a>
+        <a href="#">Solicitudes</a>
+        <a href="calendario.html">Calendario</a>
+        <a href="facturacion.html" class="activo">Facturación</a>
+        <a href="#">Clientes</a>
+    </div>
+
+    <main class="contenedor-dashboard">
+        
+        <header class="header-dashboard" style="margin-bottom: 20px;">
+            <div class="titulos-dashboard">
+                <span class="etiqueta-morada">FACTURACIÓN</span>
+                <h1 class="titulo-principal" id="titulo-pagina">Cobros pendientes</h1>
+                <p class="subtitulo" id="subtitulo-pagina">Consulta qué eventos tienen un importe pendiente y entra en su ficha para gestionarlo.</p>
+            </div>
+            <button class="btn-blanco" onclick="window.location.href='calendario.html'">&#128197; Ver calendario</button>
+        </header>
+
+        <div class="toggle-botones">
+            <button class="btn-toggle activo" id="btn-pendientes" onclick="cambiarVista('pendientes')">Pendientes de cobro</button>
+            <button class="btn-toggle" id="btn-pagados" onclick="cambiarVista('pagados')">Eventos pagados</button>
+        </div>
+
+        <div class="banner-total banner-naranja" id="banner-estadistica">
+            <div>
+                <p class="banner-titulo" id="banner-txt-titulo">TOTAL POR COBRAR</p>
+                <p class="banner-monto" id="banner-monto">4270 &euro;</p>
+            </div>
+            <p class="banner-cuenta" id="banner-conteo">2 eventos</p>
+        </div>
+
+        <table class="tabla-facturacion">
+            <thead>
+                <tr>
+                    <th>CLIENTE</th>
+                    <th>EVENTO Y FECHA</th>
+                    <th>IMPORTE</th>
+                    <th>COBRO</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="cuerpo-tabla-facturacion">
+                <!-- Se llena con JS -->
+            </tbody>
+        </table>
+
+    </main>
+
+    <script>
+        const datosPendientes = [
+            { cliente: "Lucía Martín", email: "EV-1048 · lucia@email.com", evento: "Boda", fecha: "14 jun 2026", importe: "2450 €", estado: "Pendiente" },
+            { cliente: "Carlos Vega", email: "EV-1047 · carlos@email.com", evento: "Evento corporativo", fecha: "28 may 2026", importe: "1820 €", estado: "Pendiente" }
+        ];
+
+        const datosPagados = [
+            { cliente: "Marta & Alex", email: "EV-1046 · marta@email.com", evento: "Fiesta privada", fecha: "17 may 2026", importe: "980 €", estado: "Pagado" },
+            { cliente: "Studio Norte", email: "EV-1045 · hola@studionorte.com", evento: "Concierto", fecha: "09 may 2026", importe: "3600 €", estado: "Pagado", link: "detalle_evento.html" }
+        ];
+
+        function cambiarVista(vista) {
+            const btnPendientes = document.getElementById('btn-pendientes');
+            const btnPagados = document.getElementById('btn-pagados');
+            const titulo = document.getElementById('titulo-pagina');
+            const subtitulo = document.getElementById('subtitulo-pagina');
+            const banner = document.getElementById('banner-estadistica');
+            const bannerTitulo = document.getElementById('banner-txt-titulo');
+            const bannerMonto = document.getElementById('banner-monto');
+            const tbody = document.getElementById('cuerpo-tabla-facturacion');
+
+            if (vista === 'pendientes') {
+                btnPendientes.classList.add('activo');
+                btnPagados.classList.remove('activo');
+                
+                titulo.innerText = 'Cobros pendientes';
+                subtitulo.innerText = 'Consulta qué eventos tienen un importe pendiente y entra en su ficha para gestionarlo.';
+                
+                banner.className = 'banner-total banner-naranja';
+                bannerTitulo.innerText = 'TOTAL POR COBRAR';
+                bannerMonto.innerHTML = '4270 &euro;';
+                
+                renderizarTabla(datosPendientes, 'badge-pendiente-pago');
+                
+            } else if (vista === 'pagados') {
+                btnPagados.classList.add('activo');
+                btnPendientes.classList.remove('activo');
+                
+                titulo.innerText = 'Ingresos recibidos';
+                subtitulo.innerText = 'Revisa los eventos pagados y las ganancias registradas.';
+                
+                banner.className = 'banner-total banner-cyan';
+                bannerTitulo.innerText = 'GANANCIAS REGISTRADAS';
+                bannerMonto.innerHTML = '4580 &euro;';
+                
+                renderizarTabla(datosPagados, 'badge-pagado');
+            }
+        }
+
+        function renderizarTabla(datos, claseBadge) {
+            const tbody = document.getElementById('cuerpo-tabla-facturacion');
+            tbody.innerHTML = '';
+            
+            datos.forEach(item => {
+                const clickAccion = item.link ? `onclick="window.location.href='${item.link}'" style="cursor:pointer;"` : '';
+                
+                tbody.innerHTML += `
+                    <tr ${clickAccion}>
+                        <td>
+                            <strong style="display:block; font-size: 0.9rem;">${item.cliente}</strong>
+                            <span style="font-size: 0.75rem; color: #888;">${item.email}</span>
+                        </td>
+                        <td>
+                            <strong style="display:block; font-size: 0.9rem;">${item.evento}</strong>
+                            <span style="font-size: 0.75rem; color: #888;">${item.fecha}</span>
+                        </td>
+                        <td><strong style="font-size: 1.1rem;">${item.importe}</strong></td>
+                        <td><span class="${claseBadge}">${item.estado}</span></td>
+                        <td style="color:#AAA; text-align:right;">&gt;</td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Detectar si venimos del Dashboard haciendo clic en una tarjeta específica
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const vista = urlParams.get('vista');
+            if(vista === 'pagados') {
+                cambiarVista('pagados');
+            } else {
+                cambiarVista('pendientes'); // Default
+            }
+        }
+    </script>
+</body>
+</html>
