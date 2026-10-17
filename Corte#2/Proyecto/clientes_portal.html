@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibra - Portal de Clientes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-crema: #F7F5F0;
+            --texto-principal: #1A1A1A;
+            --cyan-vibra: #5EEAD4;
+            --borde-input: #E5E2D9;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--bg-crema);
+            color: var(--texto-principal);
+        }
+
+        /* Barra de navegación superior */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: white;
+            border-bottom: 1px solid var(--borde-input);
+        }
+
+        .logo-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            color: var(--texto-principal);
+        }
+
+        .logo-nav span {
+            background: #111;
+            color: var(--cyan-vibra);
+            width: 26px;
+            height: 26px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            font-size: 0.9rem;
+        }
+
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-nuevo-evento {
+            background: transparent;
+            border: none;
+            font-family: inherit;
+            font-size: 0.9rem;
+            color: #666;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-nuevo-evento:hover {
+            color: #111;
+        }
+
+        .avatar-circle {
+            width: 36px;
+            height: 36px;
+            background: #111;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Contenido principal */
+        .main-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Vista 1: Listado de servicios / Dashboard de cliente */
+        #vista-servicios {
+            display: block;
+        }
+
+        .bienvenida-cliente {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .sub-bienvenida {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .grid-servicios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .card-servicio {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid var(--borde-input);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .card-servicio:hover {
+            border-color: #111;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .card-servicio h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .card-servicio p {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Vista 2: Paso 2 de 3 (Háblanos de tu gran día) */
+        #vista-paso2 {
+            display: none;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--borde-input);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+
+        .volver-link {
+            background: none;
+            border: none;
+            color: #666;
+            font-family: inherit;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 0;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .volver-link:hover {
+            color: #111;
+        }
+
+        .paso-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #7C3AED;
+            margin-bottom: 8px;
+        }
+
+        .titulo-paso {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .titulo-paso span {
+            font-style: italic;
+            font-weight: 400;
+            color: #7C3AED;
+        }
+
+        .sub-paso {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+
+        .seccion-formulario h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .grid-tipos-evento {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .btn-tipo {
+            background: white;
+            border: 1px solid var(--borde-input);
+            padding: 12px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+        }
+
+        .btn-tipo.seleccionado {
+            border-color: #111;
+            background: #111;
+            color: white;
+            font-weight: 500;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group-p2 {
+            margin-bottom: 20px;
+        }
+
+        .form-group-p2 label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .form-group-p2 input, .form-group-p2 select, .form-group-p2 textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--borde-input);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            background: white;
+        }
+
+        .form-group-p2 textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .btn-revisar {
+            background: var(--cyan-vibra);
+            color: #111;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            float: right;
+            box-shadow: 0 4px 15px rgba(94, 234, 212, 0.3);
+            transition: 0.2s;
+        }
+
+        .btn-revisar:hover {
+            opacity: 0.9;
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo-nav"><span>*</span> vibra</a>
+        <div class="user-nav">
+            <button class="btn-nuevo-evento" onclick="mostrarPaso2()">Tu nuevo evento</button>
+            <div class="avatar-circle" id="user-initial" title="Mi perfil">U</div>
+            <button onclick="cerrarSesion()" style="background:none; border:none; color:#E53E3E; font-size:0.85rem; cursor:pointer; font-weight:700;">Salir</button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        
+        <!-- VISTA 1: PORTAL / SELECCIÓN DE SERVICIOS -->
+        <div id="vista-servicios">
+            <h1 class="bienvenida-cliente" id="saludo-usuario">Hola, Bienvenido</h1>
+            <p class="sub-bienvenida">Selecciona una opción para comenzar a planificar tu experiencia con Vibra.</p>
+
+            <div class="grid-servicios">
+                <div class="card-servicio" onclick="mostrarPaso2()">
+                    <h3>🎉 Planificar Nuevo Evento</h3>
+                    <p>Diseña bodas, cumpleaños, conciertos y fiestas privadas a tu medida.</p>
+                </div>
+                <div class="card-servicio" onclick="alert('Aquí podrás consultar el estado de tus presupuestos y servicios contratados.')">
+                    <h3>📋 Mis Solicitudes</h3>
+                    <p>Revisa el estado actual y cotizaciones de tus eventos.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- VISTA 2: PASO 2 DE 3 (HÁBLANOS DE TU GRAN DÍA) -->
+        <div id="vista-paso2">
+            <button class="volver-link" onclick="volverAServicios()">&larr; Volver a servicios</button>
+            <div class="paso-label">PASO 2 DE 3</div>
+            <h1 class="titulo-paso">Háblanos de tu <span>gran día.</span></h1>
+            <p class="sub-paso">Con estos datos podremos preparar una propuesta que encaje de verdad contigo.</p>
+
+            <form onsubmit="enviarSolicitud(event)">
+                <div class="seccion-formulario">
+                    <h3>¿Qué estás celebrando?</h3>
+                    <div class="grid-tipos-evento">
+                        <button type="button" class="btn-tipo seleccionado" onclick="seleccionarTipo(this)">Boda</button>
+                        <button type="button" class="btn-tipo" onclick="seleccionarTipo(this)">Cumpleaños</button>
+                        <button type="button" class="btn-tipo" onclick="seleccionarTipo(this)">Evento corporativo</button>
+                        <button type="button" class="btn-tipo" onclick="seleccionarTipo(this)">Fiesta privada</button>
+                        <button type="button" class="btn-tipo" onclick="seleccionarTipo(this)">Concierto</button>
+                        <button type="button" class="btn-tipo" onclick="seleccionarTipo(this)">Otro</button>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group-p2">
+                        <label>Fecha del evento</label>
+                        <input type="date" required>
+                    </div>
+                    <div class="form-group-p2">
+                        <label>Número de invitados</label>
+                        <select required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="50">Menos de 50 invitados</option>
+                            <option value="100">50 - 150 invitados</option>
+                            <option value="300">150 - 300 invitados</option>
+                            <option value="500">Más de 300 invitados</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group-p2">
+                        <label>Ciudad o localidad</label>
+                        <input type="text" placeholder="Ej. Madrid" required>
+                    </div>
+                    <div class="form-group-p2">
+                        <label>Tipo de espacio</label>
+                        <select required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="salon">Salón de eventos</option>
+                            <option value="aire-libre">Al aire libre / Hacienda</option>
+                            <option value="club">Club privado</option>
+                            <option value="casa">Casa u otro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group-p2" style="margin-top: 10px;">
+                    <label>Cuéntanos algo más (opcional)</label>
+                    <textarea placeholder="Horario aproximado, nombre del espacio, ideas que tienes en mente..."></textarea>
+                </div>
+
+                <div class="clearfix" style="margin-top: 30px;">
+                    <button type="submit" class="btn-revisar">Revisar solicitud &rarr;</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        // Cargar nombre del usuario autenticado
+        window.onload = function() {
+            const nombreUsuario = localStorage.getItem('vibra_usuario') || 'Cliente';
+            document.getElementById('saludo-usuario').innerText = `Hola, ${nombreUsuario}`;
+            document.getElementById('user-initial').innerText = nombreUsuario.charAt(0).toUpperCase();
+        };
+
+        function mostrarPaso2() {
+            document.getElementById('vista-servicios').style.display = 'none';
+            document.getElementById('vista-paso2').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function volverAServicios() {
+            document.getElementById('vista-paso2').style.display = 'none';
+            document.getElementById('vista-servicios').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function seleccionarTipo(btn) {
+            const botones = document.querySelectorAll('.btn-tipo');
+            botones.forEach(b => b.classList.remove('seleccionado'));
+            btn.classList.add('seleccionado');
+        }
+
+        function enviarSolicitud(e) {
+            e.preventDefault();
+            alert('¡Solicitud de evento enviada con éxito! El equipo de Vibra se pondrá en contacto contigo.');
+            volverAServicios();
+        }
+
+        function cerrarSesion() {
+            localStorage.removeItem('vibra_rol');
+            localStorage.removeItem('vibra_usuario');
+            localStorage.removeItem('vibra_email');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

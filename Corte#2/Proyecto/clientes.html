@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibra - Clientes</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .sub-nav { background-color: var(--color-navbar); padding: 0 40px; display: flex; gap: 30px; border-top: 1px solid #333; }
+        .sub-nav a { color: #AAAAAA; text-decoration: none; padding: 15px 0; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        .sub-nav a:hover { color: #E0E0E0; }
+        .sub-nav a.activo { color: #FFFFFF; border-bottom: 2px solid var(--color-cyan); }
+        
+        .seccion-tabla { background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); overflow: hidden; margin-top: 20px; }
+        .header-tabla { padding: 25px 30px; border-bottom: 1px solid var(--color-borde); display: flex; justify-content: space-between; align-items: center; }
+        
+        .barra-busqueda { display: flex; align-items: center; background: var(--color-fondo); border: 1px solid var(--color-borde); padding: 10px 15px; border-radius: 20px; width: 300px; }
+        .barra-busqueda input { border: none; background: transparent; outline: none; margin-left: 10px; font-family: inherit; font-size: 0.85rem; width: 100%; color: var(--color-texto-oscuro); }
+        
+        .tabla-clientes { width: 100%; border-collapse: collapse; }
+        .tabla-clientes th { text-align: left; padding: 15px 30px; font-size: 0.7rem; color: #AAA; text-transform: uppercase; border-bottom: 1px solid var(--color-borde); }
+        .tabla-clientes td { padding: 20px 30px; border-bottom: 1px solid var(--color-borde); vertical-align: middle; }
+        .tabla-clientes tr { transition: background-color 0.2s; cursor: pointer; }
+        .tabla-clientes tr:hover { background-color: #FAFAFA; }
+        .tabla-clientes tr:last-child td { border-bottom: none; }
+        
+        .contacto-info { display: flex; align-items: center; gap: 15px; }
+        .avatar-cliente { width: 40px; height: 40px; border-radius: 50%; background: var(--color-fondo); display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 0.85rem; }
+        .textos-contacto strong { display: block; font-size: 0.95rem; margin-bottom: 3px; }
+        .textos-contacto span { font-size: 0.75rem; color: var(--color-texto-gris-claro); }
+        
+        .evento-tag { display: inline-block; background: var(--color-fondo); border: 1px solid var(--color-borde); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; color: var(--color-texto-gris); margin-right: 5px; margin-bottom: 5px; }
+        .btn-accion-link { background: transparent; border: 1px solid var(--color-borde); color: var(--color-texto-oscuro); padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .btn-accion-link:hover { background: var(--color-navbar); color: white; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" style="padding-bottom: 15px;">
+        <div class="nav-izq">
+            <div class="logo"><span class="icono-logo">*</span> vibra</div>
+            <span class="badge-admin">Administración</span>
+        </div>
+        <div class="nav-der" style="display: flex; align-items: center; gap: 15px;">
+            <a href="perfil.html" style="color: #AAA; text-decoration: none; font-size: 0.85rem; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='#AAA'">Mi perfil</a>
+            <div class="avatar-usuario">A</div>
+        </div>
+    </nav>
+    <div class="sub-nav">
+        <a href="dashboard.html">Resumen</a>
+        <a href="solicitudes.html">Solicitudes</a>
+        <a href="calendario.html">Calendario</a>
+        <a href="facturacion.html">Facturación</a>
+        <a href="clientes.html" class="activo">Clientes</a>
+    </div>
+
+    <main class="contenedor-dashboard">
+        
+        <header class="header-dashboard">
+            <div class="titulos-dashboard">
+                <span class="etiqueta-morada">CRM & CONTACTOS</span>
+                <h1 class="titulo-principal">Directorio de clientes</h1>
+                <p class="subtitulo">Gestiona la información de contacto y accede rápidamente a sus eventos.</p>
+            </div>
+            <button class="btn-crear-evento">+ Nuevo cliente</button>
+        </header>
+
+        <section class="seccion-tabla">
+            <header class="header-tabla">
+                <div>
+                    <h2 style="font-size: 1.1rem;">Cartera de clientes</h2>
+                </div>
+                <div class="barra-busqueda">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#AAA" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" placeholder="Buscar por nombre o correo..." id="input-busqueda" onkeyup="buscarCliente()">
+                </div>
+            </header>
+
+            <table class="tabla-clientes">
+                <thead>
+                    <tr>
+                        <th>CLIENTE Y CONTACTO</th>
+                        <th>TELÉFONO</th>
+                        <th>EVENTOS ASOCIADOS</th>
+                        <th>ACCIÓN</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo-clientes">
+                    
+                    <!-- Studio Norte -->
+                    <tr onclick="window.location.href='detalle_evento.html?id=studio_norte&from=clientes'">
+                        <td>
+                            <div class="contacto-info">
+                                <div class="avatar-cliente" style="background: var(--color-cyan); color: black;">SN</div>
+                                <div class="textos-contacto">
+                                    <strong class="nombre-cli">Studio Norte</strong>
+                                    <span>hola@studionorte.com</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span style="font-size: 0.85rem; font-weight: 500;">+34 910 222 333</span></td>
+                        <td><span class="evento-tag">Concierto (09 may 26)</span></td>
+                        <td><button class="btn-accion-link">Ver ficha</button></td>
+                    </tr>
+
+                    <!-- Marta & Alex -->
+                    <tr onclick="window.location.href='detalle_evento.html?id=marta_alex&from=clientes'">
+                        <td>
+                            <div class="contacto-info">
+                                <div class="avatar-cliente" style="background: var(--bg-propuesta); color: var(--text-propuesta);">M&</div>
+                                <div class="textos-contacto">
+                                    <strong class="nombre-cli">Marta & Alex</strong>
+                                    <span>marta@email.com</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span style="font-size: 0.85rem; font-weight: 500;">+34 630 567 890</span></td>
+                        <td><span class="evento-tag">Fiesta privada (17 may 26)</span></td>
+                        <td><button class="btn-accion-link">Ver ficha</button></td>
+                    </tr>
+
+                    <!-- Carlos Vega -->
+                    <tr onclick="window.location.href='detalle_evento.html?id=carlos_vega&from=clientes'">
+                        <td>
+                            <div class="contacto-info">
+                                <div class="avatar-cliente" style="background: var(--bg-revision); color: var(--text-revision);">CV</div>
+                                <div class="textos-contacto">
+                                    <strong class="nombre-cli">Carlos Vega</strong>
+                                    <span>carlos@email.com</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span style="font-size: 0.85rem; font-weight: 500;">+34 600 111 222</span></td>
+                        <td><span class="evento-tag">Corp. (28 may 26)</span></td>
+                        <td><button class="btn-accion-link">Ver ficha</button></td>
+                    </tr>
+
+                    <!-- Lucía Martín -->
+                    <tr onclick="window.location.href='detalle_evento.html?id=lucia_martin&from=clientes'">
+                        <td>
+                            <div class="contacto-info">
+                                <div class="avatar-cliente" style="background: var(--bg-nueva); color: var(--text-nueva);">LM</div>
+                                <div class="textos-contacto">
+                                    <strong class="nombre-cli">Lucía Martín</strong>
+                                    <span>lucia@email.com</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span style="font-size: 0.85rem; font-weight: 500;">+34 611 333 444</span></td>
+                        <td><span class="evento-tag">Boda (14 jun 26)</span></td>
+                        <td><button class="btn-accion-link">Ver ficha</button></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <script>
+        function buscarCliente() {
+            let input = document.getElementById('input-busqueda').value.toLowerCase();
+            let filas = document.querySelectorAll('#cuerpo-clientes tr');
+            
+            filas.forEach(fila => {
+                let nombre = fila.querySelector('.nombre-cli').innerText.toLowerCase();
+                let correo = fila.querySelector('.textos-contacto span').innerText.toLowerCase();
+                
+                if(nombre.includes(input) || correo.includes(input)) {
+                    fila.style.display = '';
+                } else {
+                    fila.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

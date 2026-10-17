@@ -13,9 +13,10 @@
         .sub-nav a { color: #AAAAAA; text-decoration: none; padding: 15px 0; font-size: 0.9rem; font-weight: 500; }
         .sub-nav a.activo { color: #FFFFFF; border-bottom: 2px solid var(--color-cyan); }
         
-        .calendario-header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 20px; border-radius: 15px 15px 0 0; border-bottom: 1px solid var(--color-borde); margin-top: 30px; }
+        .calendario-header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 20px; border-radius: 15px 15px 0 0; border-bottom: 1px solid var(--color-borde); margin-top: 20px; }
         .mes-selector { display: flex; align-items: center; gap: 20px; font-size: 1.2rem; font-weight: 700; width: 100%; justify-content: space-between; }
-        .btn-mes { background: white; border: 1px solid var(--color-borde); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+        .btn-mes { background: white; border: 1px solid var(--color-borde); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: 0.2s; }
+        .btn-mes:hover { background-color: #F5F5F5; }
         
         .calendario-grid { display: grid; grid-template-columns: repeat(7, 1fr); background: white; border-radius: 0 0 15px 15px; overflow: hidden; border-left: 1px solid var(--color-borde); }
         .dia-header { padding: 15px; text-align: center; font-size: 0.75rem; font-weight: 700; color: var(--color-texto-gris-claro); border-right: 1px solid var(--color-borde); border-bottom: 1px solid var(--color-borde); text-transform: uppercase; }
@@ -26,9 +27,12 @@
         
         .evento-cal { padding: 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 500; cursor: pointer; text-decoration: none; display: block; line-height: 1.3; transition: opacity 0.2s; }
         .evento-cal:hover { opacity: 0.8; }
-        .evento-confirmada { background-color: var(--bg-confirmada); color: #059669; }
-        .evento-propuesta { background-color: var(--bg-propuesta); color: var(--text-propuesta); }
-        .evento-revision { background-color: var(--bg-revision); color: var(--text-revision); }
+        
+        /* Colores de los eventos */
+        .evento-confirmada { background-color: #E6FFFA; color: #0D9488; }
+        .evento-propuesta { background-color: #EFF6FF; color: #3B82F6; }
+        .evento-revision { background-color: #FFF7ED; color: #EA580C; }
+        .evento-nueva { background-color: #F5F3FF; color: #7C3AED; }
     </style>
 </head>
 <body>
@@ -38,21 +42,23 @@
             <div class="logo"><span class="icono-logo">*</span> vibra</div>
             <span class="badge-admin">Administración</span>
         </div>
-        <div class="nav-der">
-            <a href="index.html" style="color: #AAA; text-decoration: none; font-size: 0.85rem; margin-right: 15px;">Cerrar sesión</a>
+        <div class="nav-der" style="display: flex; align-items: center; gap: 15px;">
+            <a href="perfil.html" style="color: #AAA; text-decoration: none; font-size: 0.85rem; transition: color 0.2s;" onmouseover="this.style.color='#FFF'" onmouseout="this.style.color='#AAA'">Mi perfil</a>
             <div class="avatar-usuario">A</div>
         </div>
     </nav>
     <div class="sub-nav">
         <a href="dashboard.html">Resumen</a>
-        <a href="#">Solicitudes</a>
+        <a href="solicitudes.html">Solicitudes</a>
         <a href="calendario.html" class="activo">Calendario</a>
-        <a href="#">Facturación</a>
-        <a href="#">Clientes</a>
+        <a href="facturacion.html">Facturación</a>
+        <a href="clientes.html">Clientes</a>
     </div>
 
     <main class="contenedor-dashboard">
         
+        <a href="javascript:history.back()" style="text-decoration: none; color: var(--color-texto-gris); font-size: 0.85rem; margin-bottom: 20px; display: inline-block;">&larr; Volver atrás</a>
+
         <header class="header-dashboard" style="margin-bottom: 10px;">
             <div class="titulos-dashboard">
                 <span class="etiqueta-morada">PLANIFICACIÓN</span>
@@ -65,72 +71,112 @@
         <div class="calendario-contenedor">
             <div class="calendario-header">
                 <div class="mes-selector">
-                    <button class="btn-mes">&larr;</button>
-                    <span>Mayo 2026</span>
-                    <button class="btn-mes">&rarr;</button>
+                    <button class="btn-mes" onclick="cambiarMes(-1)">&larr;</button>
+                    <span id="mes-anio-texto">Mayo 2026</span>
+                    <button class="btn-mes" onclick="cambiarMes(1)">&rarr;</button>
                 </div>
             </div>
             
-            <div class="calendario-grid">
-                <div class="dia-header">LUN</div><div class="dia-header">MAR</div><div class="dia-header">MIÉ</div>
-                <div class="dia-header">JUE</div><div class="dia-header">VIE</div><div class="dia-header">SÁB</div><div class="dia-header">DOM</div>
-                
-                <!-- Semana 1 -->
-                <div class="celda-dia pasado"><span class="num-dia">28</span></div>
-                <div class="celda-dia pasado"><span class="num-dia">29</span></div>
-                <div class="celda-dia pasado"><span class="num-dia">30</span></div>
-                <div class="celda-dia"><span class="num-dia">1</span></div>
-                <div class="celda-dia"><span class="num-dia">2</span></div>
-                <div class="celda-dia"><span class="num-dia">3</span></div>
-                <div class="celda-dia"><span class="num-dia">4</span></div>
-                
-                <!-- Semana 2 -->
-                <div class="celda-dia"><span class="num-dia">5</span></div>
-                <div class="celda-dia"><span class="num-dia">6</span></div>
-                <div class="celda-dia"><span class="num-dia">7</span></div>
-                <div class="celda-dia"><span class="num-dia">8</span></div>
-                <div class="celda-dia">
-                    <span class="num-dia">9</span>
-                    <!-- EL ENLACE MÁGICO AL DETALLE -->
-                    <a href="detalle_evento.html" class="evento-cal evento-confirmada">Concierto · Stud...<br>Confirmada</a>
-                </div>
-                <div class="celda-dia"><span class="num-dia">10</span></div>
-                <div class="celda-dia"><span class="num-dia">11</span></div>
-                
-                <!-- Semana 3 -->
-                <div class="celda-dia"><span class="num-dia">12</span></div>
-                <div class="celda-dia"><span class="num-dia">13</span></div>
-                <div class="celda-dia"><span class="num-dia">14</span></div>
-                <div class="celda-dia"><span class="num-dia">15</span></div>
-                <div class="celda-dia"><span class="num-dia">16</span></div>
-                <div class="celda-dia">
-                    <span class="num-dia hoy">17</span>
-                    <a href="#" class="evento-cal evento-propuesta">Fiesta privada · ...<br>Propuesta envi...</a>
-                </div>
-                <div class="celda-dia"><span class="num-dia">18</span></div>
-                
-                <!-- Semana 4 -->
-                <div class="celda-dia"><span class="num-dia">19</span></div>
-                <div class="celda-dia"><span class="num-dia">20</span></div>
-                <div class="celda-dia"><span class="num-dia">21</span></div>
-                <div class="celda-dia"><span class="num-dia">22</span></div>
-                <div class="celda-dia"><span class="num-dia">23</span></div>
-                <div class="celda-dia"><span class="num-dia">24</span></div>
-                <div class="celda-dia"><span class="num-dia">25</span></div>
-                
-                <!-- Semana 5 -->
-                <div class="celda-dia"><span class="num-dia">26</span></div>
-                <div class="celda-dia"><span class="num-dia">27</span></div>
-                <div class="celda-dia">
-                    <span class="num-dia">28</span>
-                    <a href="#" class="evento-cal evento-revision">Evento corporat...<br>En revisión</a>
-                </div>
-                <div class="celda-dia"><span class="num-dia">29</span></div>
-                <div class="celda-dia"><span class="num-dia">30</span></div>
-                <div class="celda-dia"><span class="num-dia">31</span></div>
-                <div class="celda-dia pasado"><span class="num-dia">1</span></div>
+            <div class="calendario-grid" id="calendario-dias">
+                <!-- Se llenará dinámicamente con JavaScript -->
             </div>
         </div>
     </main>
+
+    <script>
+        // Array simulado de eventos en base de datos
+        const eventos = [
+            { fecha: '2026-05-09', titulo: 'Concierto · Stud...', subtitulo: 'Confirmada', link: 'detalle_evento.html?from=calendario', clase: 'evento-confirmada' },
+            { fecha: '2026-05-17', titulo: 'Fiesta privada · ...', subtitulo: 'Propuesta enviada', link: 'detalle_evento_marta.html?from=calendario', clase: 'evento-propuesta' },
+            { fecha: '2026-05-28', titulo: 'Evento corporat...', subtitulo: 'En revisión', link: '#', clase: 'evento-revision' },
+            // Evento adicional para probar el cambio de mes a Junio
+            { fecha: '2026-06-14', titulo: 'Boda · Lucía M...', subtitulo: 'Nueva', link: '#', clase: 'evento-nueva' }
+        ];
+
+        const nombresMeses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        
+        // Empezamos en Mayo de 2026 (mes 4 en JS porque Enero es 0)
+        let fechaActual = new Date(2026, 4, 1);
+
+        function renderizarCalendario() {
+            const anio = fechaActual.getFullYear();
+            const mes = fechaActual.getMonth();
+            
+            // Actualizar el título del mes
+            document.getElementById('mes-anio-texto').innerText = `${nombresMeses[mes]} ${anio}`;
+            
+            const grid = document.getElementById('calendario-dias');
+            
+            // Encabezados de los días
+            let html = `
+                <div class="dia-header">LUN</div><div class="dia-header">MAR</div><div class="dia-header">MIÉ</div>
+                <div class="dia-header">JUE</div><div class="dia-header">VIE</div><div class="dia-header">SÁB</div><div class="dia-header">DOM</div>
+            `;
+
+            // Calcular primer día del mes y número de días
+            const primerDiaMes = new Date(anio, mes, 1);
+            let diaSemana = primerDiaMes.getDay(); // 0 es Domingo, 1 es Lunes
+            // Ajustar para que la semana empiece en Lunes (0 a 6)
+            diaSemana = diaSemana === 0 ? 6 : diaSemana - 1; 
+
+            const diasEnMes = new Date(anio, mes + 1, 0).getDate();
+            const diasMesAnterior = new Date(anio, mes, 0).getDate();
+
+            // Dibujar los días del mes anterior (grises)
+            for (let i = diaSemana - 1; i >= 0; i--) {
+                html += `<div class="celda-dia pasado"><span class="num-dia">${diasMesAnterior - i}</span></div>`;
+            }
+
+            // Dibujar los días del mes actual
+            for (let dia = 1; dia <= diasEnMes; dia++) {
+                // Marcar el 17 de mayo de 2026 como "hoy" estáticamente para tu prototipo
+                let claseHoy = (dia === 17 && mes === 4 && anio === 2026) ? 'hoy' : '';
+                
+                // Generar formato YYYY-MM-DD para buscar eventos
+                let mesStr = (mes + 1).toString().padStart(2, '0');
+                let diaStr = dia.toString().padStart(2, '0');
+                let fechaFormateada = `${anio}-${mesStr}-${diaStr}`;
+                
+                // Buscar si hay eventos este día
+                let eventosHtml = '';
+                eventos.forEach(ev => {
+                    if (ev.fecha === fechaFormateada) {
+                        eventosHtml += `<a href="${ev.link}" class="evento-cal ${ev.clase}">${ev.titulo}<br>${ev.subtitulo}</a>`;
+                    }
+                });
+
+                html += `
+                    <div class="celda-dia">
+                        <span class="num-dia ${claseHoy}">${dia}</span>
+                        ${eventosHtml}
+                    </div>
+                `;
+            }
+
+            // Dibujar los días del mes siguiente para completar la cuadrícula (hasta 35 o 42 celdas)
+            const celdasUsadas = diaSemana + diasEnMes;
+            const filasNecesarias = Math.ceil(celdasUsadas / 7);
+            const celdasTotales = filasNecesarias * 7;
+            const diasFaltantes = celdasTotales - celdasUsadas;
+
+            for (let i = 1; i <= diasFaltantes; i++) {
+                html += `<div class="celda-dia pasado"><span class="num-dia">${i}</span></div>`;
+            }
+
+            // Inyectar el HTML en la cuadrícula
+            grid.innerHTML = html;
+        }
+
+        // Función llamada por los botones de las flechas
+        window.cambiarMes = function(offset) {
+            fechaActual.setMonth(fechaActual.getMonth() + offset);
+            renderizarCalendario();
+        }
+
+        // Ejecutar al cargar la página
+        window.onload = function() {
+            renderizarCalendario();
+        }
+    </script>
 </body>
 </html>
