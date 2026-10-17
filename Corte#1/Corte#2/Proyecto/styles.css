@@ -1,0 +1,323 @@
+/* Ajuste exacto de colores y tipografía según el diseño de Figma */
+:root {
+    --color-fondo: #F7F5F0; /* Crema muy claro */
+    --color-texto-oscuro: #1A1A1A; /* Casi negro */
+    --color-texto-gris: #7A7A7A; /* Gris para subtítulos y placeholders */
+    --color-morado: #613DC1; /* Morado de la etiqueta */
+    --color-cyan: #7FF0D4; /* Verde/Cyan del botón principal y logo */
+    --color-borde: #E5E5E5; /* Gris claro para los bordes de los inputs */
+    --fuente: 'DM Sans', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--fuente);
+    color: var(--color-texto-oscuro);
+    background-color: var(--color-fondo);
+    min-height: 100vh;
+}
+
+.contenedor-principal {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* --- LADO IZQUIERDO --- */
+.seccion-formulario {
+    flex: 1;
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    padding: 40px 20px;
+    background-color: var(--color-fondo);
+}
+
+.contenido-izquierdo {
+    width: 100%;
+    max-width: 440px; /* Ancho máximo para que no se estire demasiado */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header / Logo superior */
+.encabezado-superior {
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: -0.5px;
+    margin-bottom: 15px;
+}
+
+.icono-logo {
+    background-color: var(--color-cyan);
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 1rem;
+    color: #000;
+    line-height: 1;
+    padding-top: 4px;
+}
+
+.btn-pill {
+    display: inline-block;
+    padding: 6px 16px;
+    border: 1px solid var(--color-borde);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--color-texto-oscuro);
+    text-decoration: none;
+    font-weight: 500;
+    background-color: #FFFFFF;
+    transition: background-color 0.2s;
+}
+
+.btn-pill:hover {
+    background-color: #f0f0f0;
+}
+
+/* Textos Superiores */
+.enlace-volver {
+    text-decoration: none;
+    color: var(--color-texto-gris);
+    font-size: 0.85rem;
+    margin-bottom: 30px;
+    display: inline-block;
+}
+
+.etiqueta-morada {
+    color: var(--color-morado);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.titulo-principal {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 15px;
+    letter-spacing: -1px;
+}
+
+.subtitulo {
+    color: var(--color-texto-gris);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 40px;
+}
+
+/* Formulario */
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacio entre los campos */
+}
+
+/* Fila para Nombre y Apellido (Flexbox) */
+.fila-inputs {
+    display: flex;
+    gap: 15px; /* Espacio entre las dos cajas */
+}
+
+.fila-inputs .grupo-input {
+    flex: 1; /* Ambas cajas miden el 50% */
+}
+
+.grupo-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.grupo-input label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-texto-oscuro);
+}
+
+.grupo-input input {
+    padding: 14px 16px;
+    border: 1px solid var(--color-borde);
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    outline: none;
+    background-color: #FFFFFF;
+    transition: border-color 0.2s;
+}
+
+.grupo-input input::placeholder {
+    color: #B0B0B0;
+}
+
+.grupo-input input:focus {
+    border-color: var(--color-morado);
+}
+
+/* Input de contraseña con icono */
+.input-con-icono {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-con-icono input {
+    width: 100%;
+    padding-right: 45px;
+}
+
+.btn-icono {
+    position: absolute;
+    right: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-texto-gris);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Opciones extra (Checkbox de Términos) */
+.checkbox-container {
+    display: flex;
+    align-items: center; /* Alineación del texto con la caja */
+    gap: 10px;
+    color: var(--color-texto-gris);
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.checkbox-container input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--color-borde);
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.texto-checkbox {
+    line-height: 1.3;
+}
+
+/* Enlaces subrayados (Términos, Iniciar Sesión) */
+.enlace-subrayado {
+    color: var(--color-texto-oscuro);
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+/* Botón Principal */
+.btn-primario {
+    background-color: var(--color-cyan);
+    color: var(--color-texto-oscuro);
+    border: none;
+    border-radius: 30px; 
+    padding: 16px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: opacity 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primario:hover {
+    opacity: 0.85;
+}
+
+/* Pie de página */
+.texto-pie {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-texto-gris);
+    margin-top: 10px;
+}
+
+/* --- LADO DERECHO (IMAGEN) --- */
+.seccion-imagen {
+    flex: 1;
+    background-image: linear-gradient(rgba(11, 36, 44, 0.4), rgba(11, 36, 44, 0.85)), url('concierto.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 60px 80px;
+    color: white;
+}
+
+.contenido-imagen {
+    max-width: 450px;
+}
+
+.estrellas {
+    color: var(--color-cyan); 
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.testimonio {
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 25px;
+    letter-spacing: -0.5px;
+}
+
+.autor-testimonio {
+    font-size: 0.95rem;
+}
+
+.ubicacion {
+    opacity: 0.7;
+    margin-left: 5px;
+}
+
+/* Responsividad para Móviles */
+@media (max-width: 900px) {
+    .contenedor-principal {
+        flex-direction: column;
+    }
+
+    .seccion-formulario {
+        padding: 30px 20px;
+    }
+
+    .seccion-imagen {
+        display: none; 
+    }
+
+    .titulo-principal {
+        font-size: 2rem;
+    }
+
+    .fila-inputs {
+        flex-direction: column; /* En celulares, Nombre y Apellido se apilan */
+        gap: 20px;
+    }
+}
