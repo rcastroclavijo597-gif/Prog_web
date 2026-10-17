@@ -110,29 +110,28 @@
     </main>
     <script>
     document.getElementById('formRegistro').addEventListener('submit', function(event) {
-        event.preventDefault(); // Evitamos que la página cambie de golpe
+        event.preventDefault(); // Detenemos el envío automático
         
-        // Buscamos las cajas de texto de tu registro (Asegúrate de que tu caja de correo tenga id="correo")
+        // Buscamos las cajas de texto
         const correoInput = document.getElementById('correo');
         const passwordInput = document.getElementById('password');
         
-        if (correoInput && passwordInput) {
-            // Empaquetamos los datos del nuevo usuario
-            const nuevoUsuario = {
-                correo: correoInput.value,
-                password: passwordInput.value
-            };
-            
-            // Los guardamos en la memoria del navegador
-            localStorage.setItem('usuario_vibra', JSON.stringify(nuevoUsuario));
-            
-            alert('¡Cuenta creada con éxito! Ahora inicia sesión.');
-            
-            // Ahora sí, lo enviamos al Iniciar Sesión
-            window.location.href = 'index.html';
-        } else {
-            alert('Asegúrate de que tu input de correo tenga el id="correo"');
+        // DOBLE CANDADO DE SEGURIDAD: Verificamos si están vacíos
+        if (correoInput.value.trim() === '' || passwordInput.value.trim() === '') {
+            alert('⚠️ Por favor, llena todos los campos obligatorios antes de continuar.');
+            return; // Cortamos el proceso aquí, no guardamos nada
         }
+        
+        // Si todo está lleno, guardamos los datos
+        const nuevoUsuario = {
+            correo: correoInput.value.trim(),
+            password: passwordInput.value.trim()
+        };
+        
+        localStorage.setItem('usuario_vibra', JSON.stringify(nuevoUsuario));
+        
+        alert('✅ ¡Cuenta creada con éxito! Ahora inicia sesión.');
+        window.location.href = 'index.html'; // Lo mandamos al login
     });
 </script>
 </body>
