@@ -37,6 +37,8 @@
         .tabla-facturacion th { text-align: left; padding: 15px 20px; font-size: 0.7rem; color: #AAA; text-transform: uppercase; border-bottom: 1px solid var(--color-borde); }
         .tabla-facturacion td { padding: 20px; border-bottom: 1px solid var(--color-borde); vertical-align: middle; }
         .tabla-facturacion tr:last-child td { border-bottom: none; }
+        .tabla-facturacion tr { transition: background-color 0.2s; cursor: pointer; }
+        .tabla-facturacion tr:hover { background-color: #FAFAFA; }
         
         .badge-pendiente-pago { background: #FFF3E0; color: #D97706; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
         .badge-pagado { background: #E6FFFA; color: #0D9488; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
@@ -104,14 +106,15 @@
     </main>
 
     <script>
+        // Añadido 'link' a todas las filas con la vista de retorno correspondiente
         const datosPendientes = [
-            { cliente: "Lucía Martín", email: "EV-1048 · lucia@email.com", evento: "Boda", fecha: "14 jun 2026", importe: "2450 €", estado: "Pendiente" },
-            { cliente: "Carlos Vega", email: "EV-1047 · carlos@email.com", evento: "Evento corporativo", fecha: "28 may 2026", importe: "1820 €", estado: "Pendiente" }
+            { cliente: "Lucía Martín", email: "EV-1048 · lucia@email.com", evento: "Boda", fecha: "14 jun 2026", importe: "2450 €", estado: "Pendiente", link: "detalle_evento_lucia.html?from=facturacion_pendientes" },
+            { cliente: "Carlos Vega", email: "EV-1047 · carlos@email.com", evento: "Evento corporativo", fecha: "28 may 2026", importe: "1820 €", estado: "Pendiente", link: "detalle_evento_carlos.html?from=facturacion_pendientes" }
         ];
 
         const datosPagados = [
-            { cliente: "Marta & Alex", email: "EV-1046 · marta@email.com", evento: "Fiesta privada", fecha: "17 may 2026", importe: "980 €", estado: "Pagado" },
-            { cliente: "Studio Norte", email: "EV-1045 · hola@studionorte.com", evento: "Concierto", fecha: "09 may 2026", importe: "3600 €", estado: "Pagado", link: "detalle_evento.html" }
+            { cliente: "Marta & Alex", email: "EV-1046 · marta@email.com", evento: "Fiesta privada", fecha: "17 may 2026", importe: "980 €", estado: "Pagado", link: "detalle_evento_marta.html?from=facturacion_pagados" },
+            { cliente: "Studio Norte", email: "EV-1045 · hola@studionorte.com", evento: "Concierto", fecha: "09 may 2026", importe: "3600 €", estado: "Pagado", link: "detalle_evento.html?from=facturacion_pagados" }
         ];
 
         function cambiarVista(vista) {
@@ -123,6 +126,9 @@
             const bannerTitulo = document.getElementById('banner-txt-titulo');
             const bannerMonto = document.getElementById('banner-monto');
             const tbody = document.getElementById('cuerpo-tabla-facturacion');
+
+            // Actualizamos la URL silenciosamente para que el botón "Atrás" del navegador sepa dónde está
+            window.history.replaceState(null, '', `facturacion.html?vista=${vista}`);
 
             if (vista === 'pendientes') {
                 btnPendientes.classList.add('activo');
@@ -157,7 +163,7 @@
             tbody.innerHTML = '';
             
             datos.forEach(item => {
-                const clickAccion = item.link ? `onclick="window.location.href='${item.link}'" style="cursor:pointer;"` : '';
+                const clickAccion = item.link ? `onclick="window.location.href='${item.link}'"` : '';
                 
                 tbody.innerHTML += `
                     <tr ${clickAccion}>
@@ -171,20 +177,19 @@
                         </td>
                         <td><strong style="font-size: 1.1rem;">${item.importe}</strong></td>
                         <td><span class="${claseBadge}">${item.estado}</span></td>
-                        <td style="color:#AAA; text-align:right;">&gt;</td>
+                        <td style="color:#AAA; text-align:right;">&rarr;</td>
                     </tr>
                 `;
             });
         }
 
-        // Detectar si venimos del Dashboard haciendo clic en una tarjeta específica
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const vista = urlParams.get('vista');
             if(vista === 'pagados') {
                 cambiarVista('pagados');
             } else {
-                cambiarVista('pendientes'); // Default
+                cambiarVista('pendientes'); 
             }
         }
     </script>

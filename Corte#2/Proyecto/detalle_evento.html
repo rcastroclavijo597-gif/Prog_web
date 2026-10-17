@@ -75,7 +75,7 @@
 <body>
 
     <main class="contenedor-dashboard">
-        <a href="calendario.html" style="text-decoration: none; color: var(--color-texto-gris); font-size: 0.85rem; margin-bottom: 20px; display: inline-block;">&larr; Volver al calendario</a>
+        <a id="btn-volver" href="calendario.html" style="text-decoration: none; color: var(--color-texto-gris); font-size: 0.85rem; margin-bottom: 20px; display: inline-block;">&larr; Volver al calendario</a>
 
         <header class="header-dashboard" style="margin-bottom: 20px;">
             <div class="titulos-dashboard">
@@ -245,6 +245,30 @@
             if (confirmacion) {
                 alert("La solicitud ha sido eliminada.");
                 window.location.href = "dashboard.html"; // Redirigir al dashboard después de eliminar
+            }
+        }
+    </script>
+
+    <script>
+        // Inteligencia para el botón "Volver"
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const origen = urlParams.get('from');
+            const btnVolver = document.getElementById('btn-volver');
+            
+            if(origen === 'facturacion_pendientes') {
+                btnVolver.href = 'facturacion.html?vista=pendientes';
+                btnVolver.innerHTML = '&larr; Volver a facturación';
+            } else if (origen === 'facturacion_pagados') {
+                btnVolver.href = 'facturacion.html?vista=pagados';
+                btnVolver.innerHTML = '&larr; Volver a facturación';
+            } else if (origen === 'calendario') {
+                btnVolver.href = 'calendario.html';
+                btnVolver.innerHTML = '&larr; Volver al calendario';
+            } else {
+                // Si viene del Dashboard
+                btnVolver.href = 'dashboard.html';
+                btnVolver.innerHTML = '&larr; Volver al resumen';
             }
         }
     </script>
