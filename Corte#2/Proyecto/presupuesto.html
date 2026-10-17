@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibra - Crear Presupuesto</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .layout-presupuesto { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin-top: 30px; }
+        .box-blanca { background: white; border-radius: 20px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .box-oscura { background: var(--color-navbar); border-radius: 20px; padding: 30px; color: white; position: sticky; top: 20px; }
+        
+        .header-presupuesto { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid var(--color-borde); padding-bottom: 15px; }
+        .header-presupuesto h2 { font-size: 1.2rem; }
+        .btn-texto-morado { color: var(--color-morado); background: none; border: none; font-weight: 700; font-family: inherit; cursor: pointer; display: flex; align-items: center; gap: 5px; font-size: 0.9rem; }
+        
+        /* Filas de conceptos */
+        .fila-concepto { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--color-borde); }
+        .info-concepto strong { display: block; font-size: 0.95rem; margin-bottom: 5px; }
+        .info-concepto input[type="text"] { border: 1px solid transparent; background: transparent; color: var(--color-texto-gris); font-size: 0.8rem; width: 100%; font-family: inherit; padding: 2px 0; }
+        .info-concepto input[type="text"]:focus { border-bottom: 1px solid var(--color-cyan); outline: none; }
+        
+        .precio-concepto { display: flex; align-items: center; gap: 10px; }
+        .input-precio { border: 1px solid var(--color-borde); border-radius: 8px; padding: 10px; width: 100px; text-align: right; font-weight: 700; font-family: inherit; font-size: 0.95rem; }
+        .btn-eliminar-fila { background: #FFE4E6; color: #E11D48; border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-weight: bold; display: flex; justify-content: center; align-items: center; }
+
+        .textarea-msj { width: 100%; border: 1px solid var(--color-borde); border-radius: 12px; padding: 15px; font-family: inherit; font-size: 0.85rem; color: var(--color-texto-gris); resize: vertical; margin-top: 20px; }
+        
+        /* Resumen derecho */
+        .resumen-titulo { font-size: 0.75rem; color: #AAA; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 20px; }
+        .resumen-linea { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem; color: #DDD; }
+        .resumen-total { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #444; margin-bottom: 30px; }
+        .resumen-total span { font-weight: 700; font-size: 1.1rem; }
+        .total-valor { font-size: 1.8rem; font-weight: 700; color: var(--color-cyan); }
+        .btn-full-cyan { background: var(--color-cyan); color: var(--color-navbar); width: 100%; padding: 15px; border: none; border-radius: 30px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <main class="contenedor-dashboard">
+        <a href="detalle_evento.html" style="text-decoration: none; color: var(--color-texto-gris); font-size: 0.85rem; margin-bottom: 10px; display: inline-block;">&larr; Volver al evento</a>
+
+        <header class="header-dashboard" style="margin-bottom: 0;">
+            <div class="titulos-dashboard">
+                <span class="etiqueta-morada">EV-1045 · STUDIO NORTE</span>
+                <h1 class="titulo-principal">Crear presupuesto</h1>
+                <p class="subtitulo">Configura la propuesta comercial antes de enviarla al cliente.</p>
+            </div>
+            <button class="btn-blanco">Guardar borrador</button>
+        </header>
+
+        <div class="layout-presupuesto">
+            
+            <!-- COLUMNA IZQUIERDA: Conceptos -->
+            <div class="box-blanca">
+                <div class="header-presupuesto">
+                    <h2>Conceptos</h2>
+                    <button class="btn-texto-morado" onclick="agregarConcepto()">+ Añadir concepto</button>
+                </div>
+
+                <div id="lista-conceptos">
+                    <!-- Fila 1 -->
+                    <div class="fila-concepto">
+                        <div class="info-concepto" style="flex: 1;">
+                            <strong contenteditable="true">Sonido profesional</strong>
+                            <input type="text" value="Sistema PA para 200 personas">
+                        </div>
+                        <div class="precio-concepto">
+                            <input type="number" class="input-precio" value="650" oninput="calcularTotal()"> <span style="font-weight: bold;">€</span>
+                            <button class="btn-eliminar-fila" onclick="eliminarConcepto(this)">✕</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Fila 2 -->
+                    <div class="fila-concepto">
+                        <div class="info-concepto" style="flex: 1;">
+                            <strong contenteditable="true">DJ & animación</strong>
+                            <input type="text" value="DJ profesional · 6 horas">
+                        </div>
+                        <div class="precio-concepto">
+                            <input type="number" class="input-precio" value="720" oninput="calcularTotal()"> <span style="font-weight: bold;">€</span>
+                            <button class="btn-eliminar-fila" onclick="eliminarConcepto(this)">✕</button>
+                        </div>
+                    </div>
+
+                    <!-- Fila 3 -->
+                    <div class="fila-concepto">
+                        <div class="info-concepto" style="flex: 1;">
+                            <strong contenteditable="true">Iluminación</strong>
+                            <input type="text" value="Iluminación ambiental y pista">
+                        </div>
+                        <div class="precio-concepto">
+                            <input type="number" class="input-precio" value="480" oninput="calcularTotal()"> <span style="font-weight: bold;">€</span>
+                            <button class="btn-eliminar-fila" onclick="eliminarConcepto(this)">✕</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px;">
+                    <strong style="font-size: 0.9rem;">Mensaje para el cliente</strong>
+                    <textarea class="textarea-msj" rows="4">Hola Studio Norte, hemos preparado esta propuesta según los detalles de su evento. Todos los servicios incluyen montaje, pruebas y asistencia técnica.</textarea>
+                </div>
+            </div>
+
+            <!-- COLUMNA DERECHA: Resumen -->
+            <div>
+                <div class="box-oscura">
+                    <div class="resumen-titulo">RESUMEN</div>
+                    
+                    <div class="resumen-linea">
+                        <span>Subtotal</span>
+                        <span id="txt-subtotal">1.850,00 €</span>
+                    </div>
+                    <div class="resumen-linea">
+                        <span>IVA (21%)</span>
+                        <span id="txt-iva">388,50 €</span>
+                    </div>
+                    
+                    <div class="resumen-total">
+                        <span>Total</span>
+                        <span class="total-valor" id="txt-total">2.238,50 €</span>
+                    </div>
+
+                    <p style="font-size: 0.7rem; color: #AAA; line-height: 1.4; margin-bottom: 20px;">
+                        La propuesta será válida durante 15 días. El cliente podrá aceptarla desde su panel.
+                    </p>
+
+                    <button class="btn-full-cyan" onclick="enviarPresupuesto()">Enviar al cliente &rarr;</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Función para calcular las matemáticas en tiempo real
+        function calcularTotal() {
+            // 1. Obtener todos los inputs de precio
+            const inputsPrecios = document.querySelectorAll('.input-precio');
+            let subtotal = 0;
+
+            // 2. Sumarlos todos
+            inputsPrecios.forEach(input => {
+                const valor = parseFloat(input.value) || 0;
+                subtotal += valor;
+            });
+
+            // 3. Calcular IVA (21%)
+            const iva = subtotal * 0.21;
+            const total = subtotal + iva;
+
+            // 4. Formatear y actualizar en pantalla
+            document.getElementById('txt-subtotal').innerText = formateaDinero(subtotal) + ' €';
+            document.getElementById('txt-iva').innerText = formateaDinero(iva) + ' €';
+            document.getElementById('txt-total').innerText = formateaDinero(total) + ' €';
+        }
+
+        function formateaDinero(numero) {
+            return numero.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        // Función para agregar una fila nueva
+        function agregarConcepto() {
+            const lista = document.getElementById('lista-conceptos');
+            const nuevaFila = document.createElement('div');
+            nuevaFila.className = 'fila-concepto';
+            
+            nuevaFila.innerHTML = `
+                <div class="info-concepto" style="flex: 1;">
+                    <strong contenteditable="true" style="border-bottom: 1px dashed #ccc; padding-bottom: 2px;">Nuevo servicio...</strong>
+                    <input type="text" placeholder="Descripción del servicio">
+                </div>
+                <div class="precio-concepto">
+                    <input type="number" class="input-precio" value="0" oninput="calcularTotal()"> <span style="font-weight: bold;">€</span>
+                    <button class="btn-eliminar-fila" onclick="eliminarConcepto(this)">✕</button>
+                </div>
+            `;
+            
+            lista.appendChild(nuevaFila);
+            calcularTotal();
+        }
+
+        // Función para eliminar fila
+        function eliminarConcepto(botonEliminar) {
+            const fila = botonEliminar.closest('.fila-concepto');
+            fila.remove();
+            calcularTotal(); // Recalcular al borrar
+        }
+
+        function enviarPresupuesto() {
+            alert('¡Presupuesto enviado al cliente exitosamente!');
+            window.location.href = "detalle_evento.html";
+        }
+
+        // Calcular la primera vez que carga la página
+        window.onload = calcularTotal;
+    </script>
+</body>
+</html>
