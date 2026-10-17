@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibra - Detalle de Evento</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .layout-detalle { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin-top: 20px; }
+        
+        .tarjeta-detalle { background: white; border-radius: 20px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 20px; }
+        .tarjeta-oscura { background: var(--color-navbar); color: white; }
+        
+        .titulo-seccion { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* Grid Info Básica */
+        .grid-info { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 20px; border-bottom: 1px solid var(--color-borde); padding-bottom: 20px; }
+        .dato-item label { display: block; font-size: 0.7rem; color: var(--color-texto-gris-claro); text-transform: uppercase; font-weight: 700; margin-bottom: 5px; }
+        .dato-item span { font-weight: 700; font-size: 0.95rem; }
+        .nota-box { background-color: var(--color-fondo); padding: 15px; border-radius: 10px; font-size: 0.85rem; color: var(--color-texto-gris); }
+        .nota-box strong { display: block; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 5px; color: var(--color-texto-gris-claro); }
+
+        /* Grid Servicios */
+        .grid-servicios { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .servicio-card { border: 1px solid var(--color-borde); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 15px; }
+        .icono-servicio { width: 40px; height: 40px; border-radius: 10px; display: flex; justify-content: center; align-items: center; }
+        .servicio-textos strong { display: block; font-size: 0.9rem; }
+        .servicio-textos span { font-size: 0.75rem; color: var(--color-texto-gris-claro); }
+
+        /* Timeline Actividad */
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before { content: ''; position: absolute; left: 11px; top: 5px; bottom: 5px; width: 2px; background: var(--color-borde); }
+        .timeline-item { position: relative; margin-bottom: 25px; }
+        .timeline-item::before { content: ''; position: absolute; left: -26px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--color-cyan); border: 3px solid white; box-shadow: 0 0 0 1px var(--color-borde); }
+        .timeline-item.pasado::before { background: var(--color-borde); }
+        .timeline-item strong { display: block; font-size: 0.9rem; }
+        .timeline-item span { font-size: 0.8rem; color: var(--color-texto-gris); }
+
+        /* Tarjeta Cliente (Derecha) */
+        .cliente-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #333; }
+        .cliente-datos p { font-size: 0.85rem; margin-bottom: 8px; color: #E0E0E0; }
+        .btn-oscuro-borde { background: transparent; border: 1px solid #555; color: white; width: 100%; padding: 12px; border-radius: 20px; cursor: pointer; transition: 0.2s; }
+        .btn-oscuro-borde:hover { background: #333; }
+
+        /* Formularios y Selects */
+        .form-grupo { margin-bottom: 15px; }
+        .form-grupo label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 5px; }
+        .form-select, .form-input { width: 100%; padding: 12px; border: 1px solid var(--color-borde); border-radius: 8px; font-family: inherit; font-size: 0.9rem; appearance: none; background-color: white; }
+        .btn-full { width: 100%; text-align: center; justify-content: center; margin-top: 10px; }
+
+        /* Tarjeta Peligro */
+        .tarjeta-peligro { background: #FFF5F5; border: 1px solid #FFE0E0; }
+        .tarjeta-peligro .titulo-seccion { color: #E53E3E; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; }
+        .tarjeta-peligro p { font-size: 0.8rem; color: #7A7A7A; margin-bottom: 15px; }
+        .btn-peligro { width: 100%; background: transparent; border: 1px solid #E53E3E; color: #E53E3E; padding: 12px; border-radius: 20px; cursor: pointer; font-weight: 700; transition: 0.2s; }
+        .btn-peligro:hover { background: #E53E3E; color: white; }
+        
+        .header-acciones { display: flex; gap: 10px; }
+        .btn-blanco { background: white; border: 1px solid var(--color-borde); padding: 10px 20px; border-radius: 30px; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <main class="contenedor-dashboard">
+        
+        <!-- Botón volver -->
+        <a href="calendario.html" style="text-decoration: none; color: var(--color-texto-gris); font-size: 0.85rem; margin-bottom: 20px; display: inline-block;">&larr; Volver al calendario</a>
+
+        <header class="header-dashboard" style="margin-bottom: 20px;">
+            <div class="titulos-dashboard">
+                <h1 class="titulo-principal">Concierto de Studio Norte</h1>
+                <p class="subtitulo">Consulta y gestiona todos los datos, el precio y el estado de esta solicitud.</p>
+            </div>
+            <div class="header-acciones">
+                <button class="btn-blanco">&#9998; Editar datos</button>
+                <button class="btn-crear-evento">Crear presupuesto &rarr;</button>
+            </div>
+        </header>
+
+        <div class="layout-detalle">
+            
+            <!-- COLUMNA IZQUIERDA -->
+            <div class="columna-principal">
+                
+                <!-- Info Evento -->
+                <div class="tarjeta-detalle">
+                    <div class="titulo-seccion">
+                        Información del evento
+                        <span class="badge badge-confirmada">Confirmada</span>
+                    </div>
+                    
+                    <div class="grid-info">
+                        <div class="dato-item"><label>Tipo</label><span>Concierto</span></div>
+                        <div class="dato-item"><label>Fecha</label><span>09 may 2026</span></div>
+                        <div class="dato-item"><label>Invitados</label><span>Más de 200</span></div>
+                        <div class="dato-item"><label>Espacio</label><span>Interior</span></div>
+                    </div>
+                    
+                    <div class="nota-box">
+                        <strong>Notas del cliente</strong>
+                        Sala Studio Norte
+                    </div>
+                </div>
+
+                <!-- Servicios -->
+                <div class="tarjeta-detalle">
+                    <div class="titulo-seccion">Servicios solicitados</div>
+                    
+                    <div class="grid-servicios">
+                        <div class="servicio-card">
+                            <div class="icono-servicio" style="background: var(--bg-nueva); color: var(--text-nueva);">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            </div>
+                            <div class="servicio-textos"><strong>Sonido profesional</strong><span>10 o más parlantes</span></div>
+                        </div>
+
+                        <div class="servicio-card">
+                            <div class="icono-servicio" style="background: var(--bg-confirmada); color: #059669;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+                            </div>
+                            <div class="servicio-textos"><strong>DJ & animación</strong><span>Sin configuración adicional</span></div>
+                        </div>
+
+                        <div class="servicio-card">
+                            <div class="icono-servicio" style="background: var(--bg-revision); color: var(--text-revision);">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="4.22" x2="19.78" y2="5.64"></line></svg>
+                            </div>
+                            <div class="servicio-textos"><strong>Iluminación</strong><span>Cabezas móviles · 16 luces</span></div>
+                        </div>
+
+                        <div class="servicio-card">
+                            <div class="icono-servicio" style="background: var(--bg-propuesta); color: var(--text-propuesta);">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6 6 1-4 4 1 6-6-3-6 3 1-6-4-4 6-1 3-6z"></path></svg>
+                            </div>
+                            <div class="servicio-textos"><strong>Efectos especiales</strong><span>Máquina de humo, Confeti</span></div>
+                        </div>
+
+                        <div class="servicio-card">
+                            <div class="icono-servicio" style="background: #FFE4E6; color: #E11D48;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                            </div>
+                            <div class="servicio-textos"><strong>Música en directo</strong><span>Sin configuración adicional</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actividad -->
+                <div class="tarjeta-detalle">
+                    <div class="titulo-seccion">Actividad</div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <strong>Estado actual: Confirmada</strong>
+                            <span>Ahora &middot; El cliente puede ver este estado desde su panel.</span>
+                        </div>
+                        <div class="timeline-item pasado">
+                            <strong>Solicitud recibida</strong>
+                            <span>Registro inicial &middot; El administrador creó este evento manualmente.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- COLUMNA DERECHA -->
+            <div class="columna-lateral">
+                
+                <!-- Cliente -->
+                <div class="tarjeta-detalle tarjeta-oscura">
+                    <div class="titulo-seccion" style="font-size: 0.7rem; color: #AAA; text-transform: uppercase;">Cliente</div>
+                    
+                    <div class="cliente-header">
+                        <div class="avatar-cliente" style="background: var(--color-cyan); color: black;">SN</div>
+                        <div>
+                            <strong style="display: block; font-size: 1.1rem; margin-bottom: 3px;">Studio Norte</strong>
+                            <span style="font-size: 0.75rem; color: #AAA;">Evento manual</span>
+                        </div>
+                    </div>
+                    
+                    <div class="cliente-datos">
+                        <p>hola@studionorte.com</p>
+                        <p>+34 910 222 333</p>
+                        <p style="margin-bottom: 20px;">Madrid</p>
+                    </div>
+                    
+                    <button class="btn-oscuro-borde">Enviar mensaje</button>
+                </div>
+
+                <!-- Gestión -->
+                <div class="tarjeta-detalle">
+                    <div class="titulo-seccion" style="font-size: 0.7rem; color: var(--color-texto-gris-claro); text-transform: uppercase;">Gestión Administrativa</div>
+                    
+                    <div class="form-grupo">
+                        <label>Estado de la solicitud</label>
+                        <select class="form-select">
+                            <option>Confirmada</option>
+                            <option>En revisión</option>
+                            <option>Nueva</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-grupo">
+                        <label>Precio acordado (&euro;)</label>
+                        <input type="number" class="form-input" value="3600">
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>Estado del cobro</label>
+                        <select class="form-select">
+                            <option>Pagado</option>
+                            <option>Pendiente</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-crear-evento btn-full">Guardar gestión &rarr;</button>
+                    <p style="text-align: center; font-size: 0.7rem; color: var(--color-texto-gris-claro); margin-top: 10px;">El cliente recibirá el cambio de estado y precio en su panel.</p>
+                </div>
+
+                <!-- Zona de Peligro -->
+                <div class="tarjeta-detalle tarjeta-peligro">
+                    <div class="titulo-seccion">ZONA DE ELIMINACIÓN</div>
+                    <p>Se solicitará confirmación antes de eliminar definitivamente la solicitud.</p>
+                    <button class="btn-peligro">&#128465; Eliminar solicitud</button>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibra - Calendario</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .sub-nav { background-color: var(--color-navbar); padding: 0 40px; display: flex; gap: 30px; border-top: 1px solid #333; }
+        .sub-nav a { color: #AAAAAA; text-decoration: none; padding: 15px 0; font-size: 0.9rem; font-weight: 500; }
+        .sub-nav a.activo { color: #FFFFFF; border-bottom: 2px solid var(--color-cyan); }
+        
+        .calendario-header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 20px; border-radius: 15px 15px 0 0; border-bottom: 1px solid var(--color-borde); margin-top: 30px; }
+        .mes-selector { display: flex; align-items: center; gap: 20px; font-size: 1.2rem; font-weight: 700; width: 100%; justify-content: space-between; }
+        .btn-mes { background: white; border: 1px solid var(--color-borde); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+        
+        .calendario-grid { display: grid; grid-template-columns: repeat(7, 1fr); background: white; border-radius: 0 0 15px 15px; overflow: hidden; border-left: 1px solid var(--color-borde); }
+        .dia-header { padding: 15px; text-align: center; font-size: 0.75rem; font-weight: 700; color: var(--color-texto-gris-claro); border-right: 1px solid var(--color-borde); border-bottom: 1px solid var(--color-borde); text-transform: uppercase; }
+        .celda-dia { min-height: 120px; padding: 10px; border-right: 1px solid var(--color-borde); border-bottom: 1px solid var(--color-borde); display: flex; flex-direction: column; gap: 5px; }
+        .celda-dia.pasado { color: var(--color-texto-gris-claro); background-color: #FAFAFA; }
+        .num-dia { font-size: 0.85rem; font-weight: 700; margin-bottom: 5px; }
+        .num-dia.hoy { background: var(--color-navbar); color: white; width: 24px; height: 24px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%; }
+        
+        .evento-cal { padding: 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 500; cursor: pointer; text-decoration: none; display: block; line-height: 1.3; transition: opacity 0.2s; }
+        .evento-cal:hover { opacity: 0.8; }
+        .evento-confirmada { background-color: var(--bg-confirmada); color: #059669; }
+        .evento-propuesta { background-color: var(--bg-propuesta); color: var(--text-propuesta); }
+        .evento-revision { background-color: var(--bg-revision); color: var(--text-revision); }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" style="padding-bottom: 15px;">
+        <div class="nav-izq">
+            <div class="logo"><span class="icono-logo">*</span> vibra</div>
+            <span class="badge-admin">Administración</span>
+        </div>
+        <div class="nav-der">
+            <a href="index.html" style="color: #AAA; text-decoration: none; font-size: 0.85rem; margin-right: 15px;">Cerrar sesión</a>
+            <div class="avatar-usuario">A</div>
+        </div>
+    </nav>
+    <div class="sub-nav">
+        <a href="dashboard.html">Resumen</a>
+        <a href="#">Solicitudes</a>
+        <a href="calendario.html" class="activo">Calendario</a>
+        <a href="#">Facturación</a>
+        <a href="#">Clientes</a>
+    </div>
+
+    <main class="contenedor-dashboard">
+        
+        <header class="header-dashboard" style="margin-bottom: 10px;">
+            <div class="titulos-dashboard">
+                <span class="etiqueta-morada">PLANIFICACIÓN</span>
+                <h1 class="titulo-principal">Calendario</h1>
+                <p class="subtitulo">Controla eventos, montajes y disponibilidad del equipo.</p>
+            </div>
+            <button class="btn-crear-evento">+ Nuevo evento</button>
+        </header>
+
+        <div class="calendario-contenedor">
+            <div class="calendario-header">
+                <div class="mes-selector">
+                    <button class="btn-mes">&larr;</button>
+                    <span>Mayo 2026</span>
+                    <button class="btn-mes">&rarr;</button>
+                </div>
+            </div>
+            
+            <div class="calendario-grid">
+                <div class="dia-header">LUN</div><div class="dia-header">MAR</div><div class="dia-header">MIÉ</div>
+                <div class="dia-header">JUE</div><div class="dia-header">VIE</div><div class="dia-header">SÁB</div><div class="dia-header">DOM</div>
+                
+                <!-- Semana 1 -->
+                <div class="celda-dia pasado"><span class="num-dia">28</span></div>
+                <div class="celda-dia pasado"><span class="num-dia">29</span></div>
+                <div class="celda-dia pasado"><span class="num-dia">30</span></div>
+                <div class="celda-dia"><span class="num-dia">1</span></div>
+                <div class="celda-dia"><span class="num-dia">2</span></div>
+                <div class="celda-dia"><span class="num-dia">3</span></div>
+                <div class="celda-dia"><span class="num-dia">4</span></div>
+                
+                <!-- Semana 2 -->
+                <div class="celda-dia"><span class="num-dia">5</span></div>
+                <div class="celda-dia"><span class="num-dia">6</span></div>
+                <div class="celda-dia"><span class="num-dia">7</span></div>
+                <div class="celda-dia"><span class="num-dia">8</span></div>
+                <div class="celda-dia">
+                    <span class="num-dia">9</span>
+                    <!-- EL ENLACE MÁGICO AL DETALLE -->
+                    <a href="detalle_evento.html" class="evento-cal evento-confirmada">Concierto · Stud...<br>Confirmada</a>
+                </div>
+                <div class="celda-dia"><span class="num-dia">10</span></div>
+                <div class="celda-dia"><span class="num-dia">11</span></div>
+                
+                <!-- Semana 3 -->
+                <div class="celda-dia"><span class="num-dia">12</span></div>
+                <div class="celda-dia"><span class="num-dia">13</span></div>
+                <div class="celda-dia"><span class="num-dia">14</span></div>
+                <div class="celda-dia"><span class="num-dia">15</span></div>
+                <div class="celda-dia"><span class="num-dia">16</span></div>
+                <div class="celda-dia">
+                    <span class="num-dia hoy">17</span>
+                    <a href="#" class="evento-cal evento-propuesta">Fiesta privada · ...<br>Propuesta envi...</a>
+                </div>
+                <div class="celda-dia"><span class="num-dia">18</span></div>
+                
+                <!-- Semana 4 -->
+                <div class="celda-dia"><span class="num-dia">19</span></div>
+                <div class="celda-dia"><span class="num-dia">20</span></div>
+                <div class="celda-dia"><span class="num-dia">21</span></div>
+                <div class="celda-dia"><span class="num-dia">22</span></div>
+                <div class="celda-dia"><span class="num-dia">23</span></div>
+                <div class="celda-dia"><span class="num-dia">24</span></div>
+                <div class="celda-dia"><span class="num-dia">25</span></div>
+                
+                <!-- Semana 5 -->
+                <div class="celda-dia"><span class="num-dia">26</span></div>
+                <div class="celda-dia"><span class="num-dia">27</span></div>
+                <div class="celda-dia">
+                    <span class="num-dia">28</span>
+                    <a href="#" class="evento-cal evento-revision">Evento corporat...<br>En revisión</a>
+                </div>
+                <div class="celda-dia"><span class="num-dia">29</span></div>
+                <div class="celda-dia"><span class="num-dia">30</span></div>
+                <div class="celda-dia"><span class="num-dia">31</span></div>
+                <div class="celda-dia pasado"><span class="num-dia">1</span></div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
