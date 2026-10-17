@@ -36,7 +36,7 @@
                 <p class="subtitulo">Cuéntanos un poco sobre ti. Solo te llevará un minuto.</p>
 
                 <!-- Formulario -->
-                <form id="formRegistro" class="formulario" action="dashboard.html">
+                <form id="formRegistro" class="formulario">
                     
                     <!-- Fila para Nombre y Apellidos -->
                     <div class="fila-inputs">
@@ -108,5 +108,32 @@
         </section>
 
     </main>
+    <script>
+    document.getElementById('formRegistro').addEventListener('submit', function(event) {
+        event.preventDefault(); // Evitamos que la página cambie de golpe
+        
+        // Buscamos las cajas de texto de tu registro (Asegúrate de que tu caja de correo tenga id="correo")
+        const correoInput = document.getElementById('correo');
+        const passwordInput = document.getElementById('password');
+        
+        if (correoInput && passwordInput) {
+            // Empaquetamos los datos del nuevo usuario
+            const nuevoUsuario = {
+                correo: correoInput.value,
+                password: passwordInput.value
+            };
+            
+            // Los guardamos en la memoria del navegador
+            localStorage.setItem('usuario_vibra', JSON.stringify(nuevoUsuario));
+            
+            alert('¡Cuenta creada con éxito! Ahora inicia sesión.');
+            
+            // Ahora sí, lo enviamos al Iniciar Sesión
+            window.location.href = 'index.html';
+        } else {
+            alert('Asegúrate de que tu input de correo tenga el id="correo"');
+        }
+    });
+</script>
 </body>
 </html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibra - Iniciar Sesión</title>
+    <!-- Asumiendo que tu archivo de estilos principal se llama estilos.css o styles.css según tu captura -->
+    <link rel="stylesheet" href="estilos.css"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Ajustes rápidos por si te faltaban estas clases específicas en tu CSS */
+        .btn-primario {
+            background-color: #7FF0D4;
+            color: #1A1A1A;
+            border: none;
+            padding: 14px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            transition: opacity 0.2s;
+        }
+        .btn-primario:hover {
+            opacity: 0.85;
+        }
+        .input-campo {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #EFEFEF;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+        .contenido-derecho {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 20px;
+        }
+        .texto-imagen {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            right: 40px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <main class="contenedor-principal" style="display: flex; min-height: 100vh; background-color: #F7F5F0;">
+        
+        <!-- MITAD IZQUIERDA (FORMULARIO) -->
+        <section class="seccion-formulario" style="flex: 1; padding: 40px 80px; display: flex; flex-direction: column;">
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+                <div style="font-weight: bold; font-size: 1.3rem; display: flex; align-items: center; gap: 8px;">
+                    <span style="background-color: #7FF0D4; color: #000; width: 28px; height: 28px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%; font-size: 1rem; padding-top: 4px;">*</span> vibra
+                </div>
+                <span style="border: 1px solid #EFEFEF; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; color: #7A7A7A;">Iniciar sesión</span>
+            </div>
+            
+            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; max-width: 400px; margin: 0 auto; width: 100%;">
+                <a href="#" style="text-decoration: none; color: #7A7A7A; font-size: 0.85rem; margin-bottom: 20px; display: inline-block;">&larr; Volver al inicio</a>
+                
+                <span style="color: #613DC1; font-size: 0.75rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;">BIENVENIDO DE NUEVO</span>
+                <h1 style="font-size: 2.5rem; font-weight: 700; margin: 10px 0; letter-spacing: -1px;">Inicia sesión en tu cuenta.</h1>
+                <p style="color: #7A7A7A; font-size: 0.95rem; margin-bottom: 30px;">Qué alegría verte de nuevo. Introduce tus datos.</p>
+                
+                <form id="formLogin" class="formulario">
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label for="correo_login" style="font-size: 0.85rem; font-weight: 700; color: #1A1A1A;">Correo electrónico</label>
+                        <input type="email" id="correo_login" class="input-campo" placeholder="tu@email.com" required>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <label for="password_login" style="font-size: 0.85rem; font-weight: 700; color: #1A1A1A;">Contraseña</label>
+                        <div style="position: relative;">
+                            <input type="password" id="password_login" class="input-campo" placeholder="Tu contraseña" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-primario">
+                        Iniciar sesión &rarr;
+                    </button>
+                    
+                    <p style="text-align: center; margin-top: 20px; font-size: 0.85rem; color: #7A7A7A;">
+                        ¿No tienes una cuenta? <a href="registro.html" style="color: #1A1A1A; font-weight: 700; text-decoration: underline;">Regístrate</a>
+                    </p>
+                </form>
+            </div>
+        </section>
+
+        <!-- MITAD DERECHA (IMAGEN) -->
+        <section class="contenido-derecho" style="flex: 1; background-color: #1A1A1A;">
+            <!-- Asegúrate de que concierto.jpg esté en la misma carpeta -->
+            <img src="concierto.jpg" alt="Concierto" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.8;">
+            <div class="texto-imagen">
+                <div style="color: #7FF0D4; font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 15px;">★★★★★</div>
+                <h2 style="font-size: 2.2rem; font-weight: 500; line-height: 1.2; margin: 0;">"Con Vibra, nuestra boda no fue una fiesta. Fue el evento del año."</h2>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- SCRIPT MÁGICO PARA EL INICIO DE SESIÓN -->
+    <script>
+        document.getElementById('formLogin').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evitamos que la página recargue
+            
+            const correoIngresado = document.getElementById('correo_login').value;
+            const passwordIngresada = document.getElementById('password_login').value;
+            
+            // 1. REGLA DEL ADMINISTRADOR (La que pediste)
+            if (correoIngresado === 'admin@gmail.com' && passwordIngresada === '12345') {
+                window.location.href = 'dashboard.html';
+                return; // Terminamos aquí si es admin
+            }
+            
+            // 2. REGLA DE USUARIOS REGISTRADOS
+            // Buscamos si hay un usuario guardado en la "memoria" del navegador
+            const usuarioGuardadoStr = localStorage.getItem('usuario_vibra');
+            
+            if (usuarioGuardadoStr) {
+                const usuario = JSON.parse(usuarioGuardadoStr);
+                
+                // Comparamos los datos
+                if (usuario.correo === correoIngresado && usuario.password === passwordIngresada) {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert('❌ Correo o contraseña incorrectos.');
+                }
+            } else {
+                alert('❌ No hay ninguna cuenta registrada con este correo. Por favor, regístrate primero.');
+            }
+        });
+    </script>
+</body>
+</html>
