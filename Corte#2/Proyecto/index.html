@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibra - Acceso al Sistema</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Enlaces Modularizados de CSS -->
+    <link rel="stylesheet" href="../css/base/variables.css">
+    <link rel="stylesheet" href="../css/base/reset.css">
+    <link rel="stylesheet" href="../css/components/forms.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/modules/auth.css">
+</head>
+<body>
+    <div class="contenedor-principal">
+        <div class="seccion-formulario">
+            <div class="contenido-izquierdo">
+                <div class="encabezado-superior">
+                    <div class="logo"><span class="icono-logo">*</span> vibra</div>
+                    <a href="index.html" class="btn-pill">Regresar a la web principal</a>
+                </div>
+
+                <div class="etiqueta-morada">EMPIEZA AHORA</div>
+                <h1 class="titulo-principal">Crea tu cuenta.</h1>
+                <p class="subtitulo">Diseña y solicita la experiencia ideal para tu evento.</p>
+
+                <form class="formulario" onsubmit="event.preventDefault();">
+                    <div class="fila-inputs">
+                        <div class="grupo-input">
+                            <label>Nombre</label>
+                            <input type="text" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="grupo-input">
+                            <label>Apellido</label>
+                            <input type="text" placeholder="Tu apellido" required>
+                        </div>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Correo electrónico</label>
+                        <input type="email" placeholder="tu@email.com" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Contraseña</label>
+                        <div class="input-con-icono">
+                            <input type="password" placeholder="Crea una contraseña" required>
+                            <button type="button" class="btn-icono">👁️</button>
+                        </div>
+                    </div>
+
+                    <label class="checkbox-container">
+                        <input type="checkbox" required>
+                        <span class="texto-checkbox">Acepto los <a href="#" class="enlace-subrayado">términos de servicio</a> y la política de privacidad.</span>
+                    </label>
+
+                    <button type="submit" class="btn-primario">Crear cuenta &rarr;</button>
+
+                    <p class="texto-pie">¿Ya tienes una cuenta? <a href="#" class="enlace-subrayado">Iniciar sesión</a></p>
+                </form>
+            </div>
+        </div>
+
+        <div class="seccion-imagen">
+            <div class="contenido-imagen">
+                <div class="estrellas">★★★★★</div>
+                <p class="testimonio">"La mejor plataforma para gestionar nuestros eventos con total claridad y profesionalismo."</p>
+                <p class="autor-testimonio"><strong>Studio Norte</strong> <span class="ubicacion">· Cliente Vibra</span></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
