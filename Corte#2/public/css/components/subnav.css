@@ -1,0 +1,11 @@
+/* Componente: Sub-Navegación Secundario */
+.sub-nav {
+    background-color: var(--color-navbar);
+    padding: 0 40px;
+    display: flex;
+    gap: 30px;
+    border-top: 1px solid #333;
+}
+.sub-nav a { color: #AAAAAA; text-decoration: none; padding: 15px 0; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+.sub-nav a:hover { color: #E0E0E0; }
+.sub-nav a.activo { color: #FFFFFF; border-bottom: 2px solid var(--color-cyan); }

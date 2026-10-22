@@ -1,0 +1,8 @@
+/* Pantalla: Facturación */
+.toggle-botones { display: inline-flex; background: white; border-radius: 30px; padding: 5px; margin-bottom: 30px; }
+.btn-toggle { padding: 10px 20px; border-radius: 20px; border: none; background: transparent; font-size: 0.9rem; font-weight: 700; cursor: pointer; color: var(--color-texto-gris); }
+.btn-toggle.activo { background: var(--color-texto-oscuro); color: white; }
+.banner-total { border-radius: 15px; padding: 30px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; }
+.banner-naranja { background-color: #FFF3E0; }
+.banner-cyan { background-color: #E6FFFA; }
+.banner-monto { font-size: 2.5rem; font-weight: 700; }

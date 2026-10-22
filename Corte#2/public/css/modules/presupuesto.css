@@ -1,0 +1,8 @@
+/* Pantalla: Presupuestos */
+.layout-presupuesto { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin-top: 30px; }
+.box-blanca { background: white; border-radius: 20px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+.box-oscura { background: var(--color-navbar); border-radius: 20px; padding: 30px; color: white; position: sticky; top: 20px; }
+.fila-concepto { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--color-borde); }
+.precio-concepto { display: flex; align-items: center; gap: 10px; }
+.input-precio { border: 1px solid var(--color-borde); border-radius: 8px; padding: 10px; width: 100px; text-align: right; font-weight: 700; font-size: 0.95rem; }
+.total-valor { font-size: 1.8rem; font-weight: 700; color: var(--color-cyan); }

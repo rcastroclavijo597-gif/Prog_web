@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibra - Panel de Administrador</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/base/variables.css">
+    <link rel="stylesheet" href="../css/base/reset.css">
+    <link rel="stylesheet" href="../css/components/navbar.css">
+    <link rel="stylesheet" href="../css/components/subnav.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/modules/dashboard.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-izq">
+            <div class="logo"><span class="icono-logo">*</span> vibra</div>
+            <span class="badge-admin">Administración</span>
+        </div>
+        <div class="nav-der">
+            <a href="perfil.html" style="color: #AAA; text-decoration: none; font-size: 0.85rem;">Mi perfil</a>
+            <div class="avatar-usuario">A</div>
+        </div>
+    </nav>
+    <div class="sub-nav">
+        <a href="dashboard.html" class="activo">Resumen</a>
+        <a href="solicitudes.html">Solicitudes</a>
+        <a href="calendario.html">Calendario</a>
+        <a href="facturacion.html">Facturación</a>
+        <a href="clientes.html">Clientes</a>
+    </div>
+
+    <main class="contenedor-dashboard">
+        <header class="header-dashboard">
+            <div>
+                <span class="etiqueta-morada">RESUMEN GENERAL</span>
+                <h1 class="titulo-principal">Panel de Administración</h1>
+            </div>
+            <button class="btn-crear-evento">+ Crear Nuevo Evento</button>
+        </header>
+        <section class="grid-tarjetas">
+            <div class="tarjeta-stat">
+                <h3>Eventos Activos</h3>
+                <ul id="contenedor-eventos-admin"></ul>
+            </div>
+        </section>
+    </main>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

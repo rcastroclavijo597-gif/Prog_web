@@ -1,0 +1,9 @@
+/* Pantalla: Calendario */
+.calendario-header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 20px; border-radius: 15px 15px 0 0; border-bottom: 1px solid var(--color-borde); margin-top: 20px; }
+.mes-selector { display: flex; align-items: center; gap: 20px; font-size: 1.2rem; font-weight: 700; width: 100%; justify-content: space-between; }
+.btn-mes { background: white; border: 1px solid var(--color-borde); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; }
+.calendario-grid { display: grid; grid-template-columns: repeat(7, 1fr); background: white; border-radius: 0 0 15px 15px; overflow: hidden; border-left: 1px solid var(--color-borde); }
+.dia-header { padding: 15px; text-align: center; font-size: 0.75rem; font-weight: 700; color: var(--color-texto-gris-claro); border-right: 1px solid var(--color-borde); border-bottom: 1px solid var(--color-borde); text-transform: uppercase; }
+.celda-dia { min-height: 120px; padding: 10px; border-right: 1px solid var(--color-borde); border-bottom: 1px solid var(--color-borde); display: flex; flex-direction: column; gap: 5px; }
+.celda-dia.pasado { color: var(--color-texto-gris-claro); background-color: #FAFAFA; }
+.evento-cal { padding: 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 500; text-decoration: none; display: block; }
